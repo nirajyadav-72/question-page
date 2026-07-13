@@ -81,7 +81,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.effective_user
     chat_type = update.effective_chat.type
     bot_user = await context.bot.get_me()
-    add_url = f"https://t.me{bot_user.username}?startgroup=true"
+    add_url = f"https://t.me/{bot_user.username}?startgroup=true"
 
     if chat_type == "private":
         if user.id == OWNER_ID:
@@ -133,7 +133,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     buttons = []
-    add_url = f"https://t.me{bot_user.username}?startgroup=true"
+    add_url = f"https://t.me/{bot_user.username}?startgroup=true"
     buttons.append([InlineKeyboardButton("➕ Add Me To Your Group ➕", url=add_url)])
     
     if OWNER_ID:
@@ -142,7 +142,8 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
     reply_markup = InlineKeyboardMarkup(buttons)
     await update.message.reply_text(help_text, reply_markup=reply_markup, parse_mode="Markdown")
-  async def handle_group_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
+  
+async def handle_group_messages(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """टेक्स्ट मैसेज स्कैन करना, प्राइवेट चैट वार्निंग देना और ग्रुप्स में टैगिंग संभालना"""
     if not update.message or not update.message.text:
         return
@@ -218,7 +219,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif chat_type in ["group", "supergroup"] and user and not user.is_bot:
         save_member(chat_id, user.id, user.first_name)
 
-      async def welcome_new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def welcome_new_member(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """ग्रुप में नए मेंबर के आने पर वेलकम मैसेज या थैंक्स बटन"""
     chat_id = update.effective_chat.id
     bot_user = await context.bot.get_me()
@@ -230,7 +231,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"🤖 मैं इस ग्रुप के सभी मेंबर्स को टैग करने में आपकी मदद करूँगा।\n\n"
                 f"⚙️ **महत्वपूर्ण:** कृपया मुझे ग्रुप में **Admin** बनाएं ताकि टैगिंग फीचर्स काम कर सकें!"
             )
-            add_url = f"https://t.me{bot_user.username}?startgroup=true"
+            add_url = f"https://t.me/{bot_user.username}?startgroup=true"
             keyboard = [[InlineKeyboardButton("➕ Add Me To Your Group ➕", url=add_url)]]
             reply_markup = InlineKeyboardMarkup(keyboard)
             await update.message.reply_text(thanks_text, reply_markup=reply_markup, parse_mode="Markdown")
